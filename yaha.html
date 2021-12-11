@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test bang</title>
+</head>
+<body>
+  <style>
+    * {
+      backround: #3fb4db
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
+  <script>
+    function anu() {
+      var engine = Matter.Engine.create()
+      var render = Matter.Render.create({
+        element: document.body,
+        engine,
+        options: {
+          width: 1000, height: 600,
+          wireFrames: false
+        }
+      })
+      var mouse = Matter.Mouse.create(render.canvas)
+      let gerak = Matter.MouseConstraint.create(engine, {
+        mouse, constraint: {
+          render: {
+            visible: false
+          }
+        }
+      })
+      var objs = []
+      for (i = 0; i < 20; i++) {
+        var rndm = Math.floor(Math.random()*50)
+        objs.push(Matter.Bodies.rectangle(150, 0-(i*15), rndm, rndm))
+      }
+      var bawah = Matter.Bodies.rectangle(300, 400, 300, 10, {
+        isStatic: true
+      })
+      var bawah3 = Matter.Bodies.rectangle(150, 600, 810, 8, {
+        isStatic: true
+      })
+      var bawah2 = Matter.Bodies.rectangle(100, 200, 100, 8, {
+        isStatic: true
+      })
+      var wall = [Matter.Bodies.rectangle(0, 400, 8, 810, {
+        isStatic: true
+      }),
+        Matter.Bodies.rectangle(348, 400, 8, 810, {
+          isStatic: true
+        })]
+      Matter.World.add(engine.world, [bawah, gerak, bawah3, bawah2, ...wall,
+        ...objs])
+      Matter.Engine.run(engine)
+      Matter.Render.run(render)
+    }
+    anu()
+  </script>
+</body>
+</html>
