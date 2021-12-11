@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test bang</title>
+</head>
+<body>
+  <style>
+    body {
+      backround: #2a3032
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
+  <script>
+    var engine = Matter.Engine.create()
+    var render = Matter.Render.create({
+      element: document.body,
+      engine,
+      options: {
+        width: 720, height: 1080,
+        wireFrames: false
+      }
+    })
+    var mouse = Matter.Mouse.create(render.canvas)
+    let gerak = Matter.MouseConstraint.create(engine, {
+      mouse, constraint: {
+        render: {
+          visible: false
+        }
+      }
+    })
+    var atas = Matter.Bodies.rectangle(200, 100, 80, 80)
+    var buled = Matter.Bodies.circle(400, 100, 80)
+    var bawah = Matter.Bodies.rectangle(0, 400, 810, 8, {
+      isStatic: true
+    })
+    Matter.World.add(engine.world, [atas, bawah, gerak, buled])
+    Matter.Engine.run(engine)
+    Matter.Render.run(render)
+  </script>
+</body>
+</html>
